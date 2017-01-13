@@ -10,12 +10,18 @@ function displayLocation(latitude,longitude){
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             var data = JSON.parse(request.responseText);
-            var address = data.results[6].formatted_address;
-            //var fulladdress = address.formatted_address;
+            //var address = data.results.address_components[6].long_name;            
+            var add= data.results[0].formatted_address ;
+            var value=add.split(",");
+            var count=value.length;
+            var country=value[count-1];
+            var state=value[count-2];
+            var city=value[count-3];
+            alert("city name is: " + city);
             //document.write(address.formatted_address);
-            console.log(address);
+            /*console.log(address);
             var adr = address.split(',');                        
-            console.log(adr[0]);
+            console.log(adr[0]);*/
             /*var city;
             adr.forEach(function(data){                
                 if(data.indexOf('city')!==-1||data.indexOf('City')!==-1){
@@ -43,11 +49,11 @@ function displayLocation(latitude,longitude){
                 document.getElementById('forecast_data').src = 'forecast.php';
             });
             */
-             $.post('weatherapi.php',{city: adr[0], fulladdr: fulladdress},function(data){
+            $.post('weatherapi.php',{city: city, fulladdr: fulladdress},function(data){
                 console.log(data);
                 var data_content = document.createElement("h2");
 
-                 /*data = data.substr(1,data.length-2);
+                /*data = data.substr(1,data.length-2);
                 data +"&#x2103;";*/
                 data = JSON.parse(data);
                 data_content.innerHTML = data[0]+"</br>"+data[1]+"</br>"+data[2];
