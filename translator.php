@@ -12,7 +12,7 @@ $username = "cff66ee8-d43f-4ce2-9464-41ca94be78a6";
 $password = "w4GlPFXEoluu";
 $params = ['source'=>$prevlang,'target'=>$lang,'text'=>$text];
 $defaults = array(
-    CURLOPT_URL => 'https://gateway.watsonplatform.net/language-translator/api/v2/translate',
+    CURLOPT_URL => 'https://gateway.watsonplatform.net/language-translator/api',
     CURLOPT_USERPWD => "$username:$password",
     CURLOPT_POST => true,
     CURLOPT_POSTFIELDS => $params,
