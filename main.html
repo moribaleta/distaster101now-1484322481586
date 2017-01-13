@@ -1,0 +1,290 @@
+
+
+<html>
+
+    <head>
+        <title>Disaster101</title>
+        <link rel="stylesheet" href="resources/css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="resources/js/op.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+    <script src="translator.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        $(document).ready(
+            function(){
+
+                $("a").on('click', function(event) {
+
+
+                    if (this.hash !== "") {
+
+                        event.preventDefault();
+
+                        var hash = this.hash;
+                        $('html, body').animate({
+                            scrollTop: $(hash).offset().top
+                        }, 800, function(){
+                            window.location.hash = hash;
+                        });
+                    } // End if
+
+                });
+
+            }
+
+        );
+        var next = true;
+        function loadMap(num){
+            if(num==1&&next||num==2){
+                document.getElementById("iframe_map").setAttribute("src","map.html");
+                document.getElementById("iframe_map").style.height = '500px';
+                $("#iframe_map").css("transition","all .2s ease-in-out");
+                if(num==1){
+                    next = false;
+                    document.getElementById('back').style.display='block';
+                }
+            }else if(num==3){
+                document.getElementById("iframe_map").setAttribute("src","none");
+                document.getElementById("iframe_map").style.height = '0px';
+                $("#iframe_map").css("transition","all .2s ease-in-out");
+                next = true;
+                document.getElementById('back').style.display='none';
+            }
+        }
+
+
+    </script>
+    </head>
+<body>
+
+    <header id="header">
+        <div id="header_logo">
+            <h1>Disaster 101</h1>
+            <h4 id="subheader"><script>translateData('press long click to send response unit',"subheader");</script></h4>
+        </div>
+    </header>
+    <con>
+        <div id="emergency_pane">
+            <button id="btnEmergency" onclick="press();"><script>translateData('Emergency','btnEmergency');</script></button>
+        </div>
+        <button id="back" onclick="loadMap(2);">back</button>
+        <iframe id="iframe_map" height="0" width="100%"></iframe>
+        <div id="data_container">
+            <a href="#data_content" id="bottom_a">
+                <img id="bottom_ic" src="resources/images/arrow-down.png">
+            </a>
+            <div id="data_content">
+                <h2 style="font-size:18px" id="status"><script>translateData('status','status');</script></h2>
+            </div>
+            <div id="crowd_report">
+                <iframe id="forecast_data" src="multipleforecast.php"></iframe>
+            </div>
+            <!--div id="data_content">
+</div>
+<div id="data_content">
+</div>
+<div id="data_content">
+</div-->
+        </div>
+        <p style="display:none" id="p" name="data_result"></p>
+    </con>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+
+        window.onscroll = function() {myFunction()};
+
+        function myFunction() {
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                document.getElementById("bottom_a").href="#header";
+                document.getElementById("bottom_ic").src = 'resources/images/arrow-up.png';
+
+            } else {
+                document.getElementById("bottom_a").href="#data_content";
+                document.getElementById("bottom_ic").src = 'resources/images/arrow-down.png';
+            }
+        }
+
+        $(document).ready(function () {
+            /*var longpress = false;
+
+            $("#btnEmergency").on('click', function () {
+                (longpress) ?
+                    runReport()
+                : loadMap(1) ;
+            });
+
+            var startTime, endTime;
+            $("#btnEmergency").on('mousedown', function () {
+                startTime = new Date().getTime();
+            });
+
+            $("#btnEmergency").on('mouseup', function () {
+                endTime = new Date().getTime();
+                longpress = (endTime - startTime < 500) ? false : true;
+            });
+            */
+
+        });
+        var send  = false;
+        function press(){
+            if(send){
+                runReport();
+            }else{
+                send = true;
+                alert("press again");
+            }
+        }
+        function runReport(){
+            /*var email = document.getElementById("email").value;
+            sessionStorage.setItem('email',email);*/
+            $.post('email.php',{},function(data){
+                alert('report has been sent');
+            });
+            open_script();
+            alert('report has been sent');
+        }
+
+        function open_script(){
+            //var coord = document.getElementById("location").value.split(", ");
+
+            //window.location.assign();//there are many ways to do this
+            $.ajax({
+                url:'https://disaster101.mybluemix.net/sms.php',
+                success: function(response){
+                    console.log(response);
+                }
+            });
+        }
+        loadMap(1);
+    </script>
+    <script src="weather.js"></script>
+
+    <script>
+
+        $(function() {
+
+
+            var people1 = [];
+
+            $.getJSON('resources/json/Etips.json', function(data) {
+                var count = 1;
+                $.each(data.EQTIPS, function(i, f) {
+                    var tblRow = "<tr>" + "<td>" + "<p id='tip1"+count+"' >" +translateData(  count+"." +f.tip,"tip1"+count )+ "</p>" + "<br>" +"</td>" + "</tr>"
+                    $(tblRow).appendTo("#tips1");
+                    count++;
+                });
+
+            });
+
+        });
+    </script>
+
+    <div id="crowd_report">
+        <div id="tips1" style=";background-color:white;float:left;display:block;text-align:left;padding:10px;margin-left:30px;overflow-y: scroll; height:400px;">
+            <h1 id='tip1'><script>translateData('Earthquake Disaster Prevention Tips','tip1');</script></h1>
+        </div>
+    </div>
+
+
+    <script>
+
+        $(function() {
+
+
+            var people1 = [];
+
+            $.getJSON('resources/json/tsutips.json', function(data) {
+                var count = 1;
+                $.each(data.TSUTIPS, function(i, f) {
+                    var tblRow = "<tr>" + "<td>" + "<p id='tip2"+count+"' >" +translateData( count+"." + f.tip,"tip2"+count) + "</p>" + "<br>" +"</td>" + "</tr>"
+                    $(tblRow).appendTo("#tips2");
+                    count++;
+                });
+
+            });
+
+        });
+    </script>
+
+
+    <div id="crowd_report">
+        <div id="tips2" style="background-color:white;float:left;display:block;text-align:left;padding:10px;margin-left:30px;overflow-y: scroll; height:400px;">
+            <h1 id="tip2"><script>translateData('Tsunami Disaster Prevention Tips','tip2');</script></h1>
+        </div>
+    </div>
+
+
+    <script>
+
+        $(function() {
+
+
+            var people1 = [];
+
+            $.getJSON('resources/json/typtips.json', function(data) {
+                var count = 1;
+                $.each(data.TYPTIPS, function(i, f) {
+                    var tblRow = "<tr>" + "<td>" + "<p id='tip3"+count+"' >" + translateData(count+". " + f.tip,"tip3"+count) + "</p>" + "<br>" +"</td>" + "</tr>"
+                    $(tblRow).appendTo("#tips3");
+                    count++;
+                });
+
+            });
+
+        });
+    </script>
+
+
+    <div id="crowd_report">
+        <div id="tips3" style="background-color:white;float:left;display:block;text-align:left;padding:10px;margin-left:30px;overflow-y: scroll; height:400px;">
+            <h1 id="tip3"><script>translateData('Typhoon Disaster Prevention Tips','tip3');</script></h1>
+        </div>
+    </div>
+
+
+    <script>
+
+        $(function() {
+
+
+            var people1 = [];
+
+            $.getJSON('resources/json/evac.json', function(data) {
+                $.each(data.evacLoc, function(i, f) {
+                    var tblRow = "<tr>" + "<td>" + "<p>" + f.evac + "</p>" + "<br>" +"</td>" + "</tr>"
+                    $(tblRow).appendTo("#tips4");
+                });
+
+            });
+
+        });
+    </script>
+
+
+    <div id="crowd_report">
+        <div id="tips4" style="background-color:white;float:left;display:block;text-align:left;padding:10px;margin-left:30px;overflow-y: scroll; height:400px;">
+            <h1 id="tip4"><script>translateData('Evacuation Centers',"tip4");</script></h1>
+        </div>
+    </div>
+    <div id="crowd_report">
+        <form action="index.php" method="post">
+            <select name='lang-select' id="lang-select">
+                <option value="ar">Arabic</option>
+                <option value="arz">Egyptian Arabicab</option>
+                <option value="de">German</option>
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="it">Italian</option>
+                <option value="jp">Japanese</option>
+                <option value="ko">Korean</option>
+                <option value="pt">Portugese</option>
+            </select>
+            <input type="submit" value="Select">
+        </form>
+    </div>
+</body>
+
+</html>
