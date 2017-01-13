@@ -13,15 +13,16 @@ function displayLocation(latitude,longitude){
             var address = data.results[0];
             var fulladdress = address.formatted_address;
             //document.write(address.formatted_address);
-            var adr = address.formatted_address.split(',');
-            /*adr = adr[3].substr(1,adr[3].length);*/
-            var city;
+            var adr = address[6].formatted_address.split(',');
+            adr = adr.split(',');
+            console.log(adr[0]);
+            /*var city;
             adr.forEach(function(data){                
                 if(data.indexOf('city')!==-1||data.indexOf('City')!==-1){
                     console.log(data);
                     city = data;                                    
                 }
-            });
+            });*/
             //city = city.substr(1,city.length);
             console.log(city);
             //window.open("weatherapi.php?city='"+adr[1]+"'",'_blank');
@@ -42,7 +43,7 @@ function displayLocation(latitude,longitude){
                 document.getElementById('forecast_data').src = 'forecast.php';
             });
             */
-             $.post('weatherapi.php',{city: adr, fulladdr: fulladdress},function(data){
+             $.post('weatherapi.php',{city: adr[0], fulladdr: fulladdress},function(data){
                 console.log(data);
                 var data_content = document.createElement("h2");
 
