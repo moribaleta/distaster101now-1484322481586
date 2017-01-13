@@ -10,11 +10,13 @@ function displayLocation(latitude,longitude){
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             var data = JSON.parse(request.responseText);
-            var address = data.results[0];
+            var address = data.results[6];
             var fulladdress = address.formatted_address;
             //document.write(address.formatted_address);
-            var adr = address[6].formatted_address.split(',');
+            console.log(address);
+            var adr = address.formatted_address.split(',');
             adr = adr.split(',');
+            
             console.log(adr[0]);
             /*var city;
             adr.forEach(function(data){                
