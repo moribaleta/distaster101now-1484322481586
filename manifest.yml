@@ -1,0 +1,8 @@
+applications:
+- path: .
+  memory: 128M
+  instances: 1
+  domain: mybluemix.net
+  name: distaster101now
+  host: distaster101now
+  disk_quota: 1024M
