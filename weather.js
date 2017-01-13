@@ -19,9 +19,7 @@ function displayLocation(latitude,longitude){
             adr.forEach(function(data){
                 console.log(data);
                 if(data.indexOf('city')!==-1||data.indexOf('City')!==-1){
-                    city = data;
-                
-                    break;
+                    city = data;                                    
                 }
             });
             city = city.substr(1,city.length);
