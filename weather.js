@@ -17,12 +17,15 @@ function displayLocation(latitude,longitude){
             /*adr = adr[3].substr(1,adr[3].length);*/
             var city;
             adr.forEach(function(data){
+                console.log(data);
                 if(data.indexOf('city')!==-1||data.indexOf('City')!==-1){
                     city = data;
+                
+                    break;
                 }
             });
             city = city.substr(1,city.length);
-            console.log(adr);
+            console.log(city);
             //window.open("weatherapi.php?city='"+adr[1]+"'",'_blank');
             /*$.ajax({
                                             url: "weatherapi.php?city="+adr+"",
