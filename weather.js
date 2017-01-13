@@ -17,7 +17,7 @@ function displayLocation(latitude,longitude){
             var country=value[count-1];
             var state=value[count-2];
             var city=value[count-3];
-            alert("city name is: " + city);
+            console.log("city name is: " + city);
             //document.write(address.formatted_address);
             /*console.log(address);
             var adr = address.split(',');                        
