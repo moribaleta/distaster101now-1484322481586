@@ -12,11 +12,13 @@ function displayLocation(latitude,longitude){
             var data = JSON.parse(request.responseText);
             //var address = data.results.address_components[6].long_name;            
             var add= data.results[0].formatted_address ;
+            
             var value=add.split(",");
             var count=value.length;
             var country=value[count-1];
             var state=value[count-2];
             var city=value[count-3];
+            city = city.substr(1,city.length);
             console.log("city name is: " + city);
             //document.write(address.formatted_address);
             /*console.log(address);
@@ -49,7 +51,7 @@ function displayLocation(latitude,longitude){
                 document.getElementById('forecast_data').src = 'forecast.php';
             });
             */
-            $.post('weatherapi.php',{city: city, fulladdr: fulladdress},function(data){
+            $.post('weatherapi.php',{city: city, fulladdr: add},function(data){
                 console.log(data);
                 var data_content = document.createElement("h2");
 
