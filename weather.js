@@ -16,13 +16,13 @@ function displayLocation(latitude,longitude){
             var adr = address.formatted_address.split(',');
             /*adr = adr[3].substr(1,adr[3].length);*/
             var city;
-            adr.forEach(function(data){
-                console.log(data);
+            adr.forEach(function(data){                
                 if(data.indexOf('city')!==-1||data.indexOf('City')!==-1){
+                    console.log(data);
                     city = data;                                    
                 }
             });
-            city = city.substr(1,city.length);
+            //city = city.substr(1,city.length);
             console.log(city);
             //window.open("weatherapi.php?city='"+adr[1]+"'",'_blank');
             /*$.ajax({

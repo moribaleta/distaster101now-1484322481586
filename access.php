@@ -1,8 +1,8 @@
 <?php
 $service_url = "https://gateway.watsonplatform.net/language-translator/api/v2/translate?source=en&target=es&text=hello";
 $curl = curl_init($service_url);
-$username = "8d29fbf7-9469-4b34-9e34-daa211c2a8df";
-$password = "KNhawABNU6Ic";
+$username = "cff66ee8-d43f-4ce2-9464-41ca94be78a6";
+$password = "w4GlPFXEoluu";
 $headers = array(
     'Content-Type:application/json'       
 );
